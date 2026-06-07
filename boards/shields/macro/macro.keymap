@@ -22,7 +22,7 @@
             
             // Hold knob for Brightness mode. Tap knob for Mute.
             bindings = <
-                &kp A  &kp B  &kp C  &encoder_btn 1 C_MUTE
+                &kp C_PREV  &kp C_PP  &kp C_NEXT  &encoder_btn 1 C_MUTE
             >;
 
             // Twisting the knob changes volume
