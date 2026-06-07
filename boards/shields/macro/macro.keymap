@@ -1,0 +1,18 @@
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+
+/ {
+    keymap {
+        compatible = "zmk,keymap";
+
+        default_layer {
+            // Keys: B1 (D1), B2 (D2), B3 (D3), Encoder Click (D10)
+            bindings = <
+                &kp A  &kp B  &kp C  &kp C_MUTE
+            >;
+
+            // Encoder actions: Turn Right (Vol Up), Turn Left (Vol Down)
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
+        };
+    };
+};
