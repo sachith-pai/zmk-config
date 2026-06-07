@@ -2,17 +2,43 @@
 #include <dt-bindings/zmk/keys.h>
 
 / {
+    behaviors {
+        // Defines the custom logic for the encoder button
+        encoder_btn: hold_tap_encoder {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "hold-preferred";
+            tapping-term-ms = <250>; // Hold for 250ms to trigger the layer switch
+            bindings = <&tog>, <&kp>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
-        default_layer {
-            // Keys: B1 (D1), B2 (D2), B3 (D3), Encoder Click (D10)
+        volume_layer {
+            // This name automatically shows on the OLED screen!
+            display-name = "VOLUME"; 
+            
+            // Hold knob for Brightness mode. Tap knob for Mute.
             bindings = <
-                &kp A  &kp B  &kp C  &kp C_MUTE
+                &kp A  &kp B  &kp C  &encoder_btn 1 C_MUTE
             >;
 
-            // Encoder actions: Turn Right (Vol Up), Turn Left (Vol Down)
+            // Twisting the knob changes volume
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
+        };
+
+        brightness_layer {
+            display-name = "BRIGHT";
+            
+            // Tapping the knob here toggles back to the Volume layer
+            bindings = <
+                &trans  &trans  &trans  &tog 1
+            >;
+
+            // Twisting the knob changes Windows display brightness
+            sensor-bindings = <&inc_dec_kp C_BRI_UP C_BRI_DN>;
         };
     };
 };
