@@ -23,16 +23,18 @@
 // 2. Setup the OLED Display
 &i2c0 {
     status = "okay";
+    clock-frequency = <100000>;
     pinctrl-0 = <&i2c0_custom>;
     pinctrl-1 = <&i2c0_custom_sleep>;
     pinctrl-names = "default", "sleep";
 
-    oled: ssd1306@3c {
-        compatible = "solomon,ssd1306fb";
+    // CHANGED: Using the SH1106 driver instead of SSD1306
+    oled: sh1106@3c {
+        compatible = "sinowealth,sh1106";
         reg = <0x3c>;
         width = <128>;
         height = <64>;
-        segment-offset = <0>;
+        segment-offset = <2>; // Crucial for SH1106 displays
         page-offset = <0>;
         display-offset = <0>;
         multiplex-ratio = <63>;
