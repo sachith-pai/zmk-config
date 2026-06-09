@@ -1,5 +1,4 @@
 #include <dt-bindings/zmk/matrix_transform.h>
-#include <dt-bindings/pinctrl/nrf-pinctrl.h>
 
 / {
     chosen {
@@ -32,7 +31,7 @@
         };
     };
 
-    // 3. Define the Rotary Encoder on D4 and D5
+    // --- ROTARY ENCODER ---
     encoder_1: encoder_1 {
         compatible = "alps,ec11";
         a-gpios = <&xiao_d 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
@@ -47,18 +46,18 @@
         triggers-per-rotation = <20>; 
     };
 
-    // 4. Define Direct GPIO for your 4 buttons
+    // --- BUTTONS ---
     kscan0: kscan_0 {
         compatible = "zmk,kscan-gpio-direct";
         input-gpios
             = <&xiao_d 0 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>  // B1
             , <&xiao_d 1 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>  // B2
             , <&xiao_d 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>  // B3
-            , <&xiao_d 5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Encoder Button
+            , <&xiao_d 5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>  // Encoder Button
             ;
     };
 
-    // 5. Map the 4 keys in a single straight line
+    // --- MATRIX ---
     default_transform: matrix_transform_0 {
         compatible = "zmk,matrix-transform";
         columns = <4>;
