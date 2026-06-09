@@ -18,8 +18,8 @@
     // 2. Define the EC11 Encoder
     left_encoder: encoder_left {
         compatible = "alps,ec11";
-        a-gpios = <&gpio0 11 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; // D7
-        b-gpios = <&gpio0 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; // D8
+        a-gpios = <&gpio0 8 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; // D7
+        b-gpios = <&gpio0 9 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; // D8
         steps = <80>;
         status = "okay";
     };
