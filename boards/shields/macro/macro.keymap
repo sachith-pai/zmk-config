@@ -18,7 +18,7 @@
 
         volume_layer {
             // This name automatically shows on the OLED screen!
-            display-name = "VOLUME"; 
+            
             
             // Hold knob for Brightness mode. Tap knob for Mute.
             bindings = <
@@ -30,7 +30,7 @@
         };
 
         brightness_layer {
-            display-name = "BRIGHT";
+            
             
             // Tapping the knob here toggles back to the Volume layer
             bindings = <
