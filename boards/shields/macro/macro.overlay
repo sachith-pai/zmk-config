@@ -1,65 +1,78 @@
-#include <dt-bindings/zmk/matrix_transform.h>
-#include <dt-bindings/pinctrl/nrf-pinctrl.h>
+// Macro Macropad - Devicetree Overlay
+// Target: Pro Micro / Elite-C (AVR) or compatible
+// Buttons: B1-D1, B2-D2, B3-D3
+// Encoder: CW-D10, CCW-D9, BTN-D8
+// SSD1306: SDA-D4, SCL-D5
 
-// 1. Setup the OLED Display using the board's built-in I2C alias
-&xiao_i2c {
+#include <dt-bindings/zmk/matrix_transform.h>
+
+/ {
+    model = "Macro Macropad";
+    compatible = "macro,macropad";
+
+    chosen {
+        zmk,kscan = &kscan0;
+        zmk,matrix_transform = &default_transform;
+        zmk,display = &oled;
+    };
+
+    default_transform: keymap_transform_0 {
+        compatible = "zmk,matrix-transform";
+        columns = <4>;
+        rows = <1>;
+        map = <
+            RC(0,0) RC(0,1) RC(0,2) RC(0,3)
+        >;
+    };
+
+    // Direct GPIO key scan (no matrix, direct wiring)
+    kscan0: kscan {
+        compatible = "zmk,kscan-gpio-direct";
+        label = "KSCAN";
+
+        input-gpios
+            = <&pro_micro 1 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>   // D1 - Button 1
+            , <&pro_micro 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>   // D2 - Button 2
+            , <&pro_micro 3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>   // D3 - Button 3
+            , <&pro_micro 8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>   // D8 - Encoder button
+            ;
+    };
+
+    // EC11 Rotary Encoder
+    sensors {
+        compatible = "zmk,keymap-sensors";
+        sensors = <&encoder>;
+        triggers-per-rotation = <20>;
+    };
+};
+
+// I2C for SSD1306 (SDA=D4, SCL=D5)
+&i2c0 {
     status = "okay";
+    sda-pin = <4>;   // D4
+    scl-pin = <5>;   // D5
 
     oled: ssd1306@3c {
         compatible = "solomon,ssd1306fb";
         reg = <0x3c>;
+        label = "DISPLAY";
         width = <128>;
-        height = <64>;
+        height = <32>;
         segment-offset = <0>;
         page-offset = <0>;
         display-offset = <0>;
-        multiplex-ratio = <63>;
+        multiplex-ratio = <31>;
         segment-remap;
         com-invdir;
+        com-sequential;
         prechargep = <0x22>;
     };
 };
 
-/ {
-    chosen {
-        zmk,kscan = &kscan0;
-        zmk,matrix-transform = &default_transform;
-        zephyr,display = &oled;
-    };
-
-    // 2. Define the Rotary Encoder
-    encoder_1: encoder_1 {
-        compatible = "alps,ec11";
-        a-gpios = <&xiao_d 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        b-gpios = <&xiao_d 9 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        steps = <80>;
-        status = "okay";
-    };
-
-    sensors {
-        compatible = "zmk,keymap-sensors";
-        sensors = <&encoder_1>;
-        triggers-per-rotation = <20>;
-    };
-
-    // 3. Define Direct GPIO for 4 buttons
-    kscan0: kscan_0 {
-        compatible = "zmk,kscan-gpio-direct";
-        input-gpios
-            = <&xiao_d 0 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>   // B1
-            , <&xiao_d 1 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>   // B2
-            , <&xiao_d 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>   // B3
-            , <&xiao_d 8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>   // Encoder Button
-            ;
-    };
-
-    // 4. Map the 4 keys
-    default_transform: matrix_transform_0 {
-        compatible = "zmk,matrix-transform";
-        columns = <4>;
-        rows = <1>;
-        map = 
-            RC(0,0) RC(0,1) RC(0,2) RC(0,3)
-        >;
-    };
+// EC11 Encoder (CW=D10, CCW=D9)
+&encoder {
+    status = "okay";
+    a-gpios = <&pro_micro 10 (GPIO_ACTIVE_HIGH)>;   // D10 - CW
+    b-gpios = <&pro_micro 9  (GPIO_ACTIVE_HIGH)>;   // D9  - CCW
+    steps = <80>;
 };
