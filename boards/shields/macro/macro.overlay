@@ -7,7 +7,7 @@
         group1 {
             psels = <NRF_PSEL(TWIM_SDA, 1, 14)>,
                     <NRF_PSEL(TWIM_SCL, 1, 13)>;
-            bias-pull-up;
+            bias-pull-up;        
         };
     };
     i2c0_custom_sleep: i2c0_custom_sleep {
@@ -52,8 +52,8 @@
     // 3. Define the Rotary Encoder on D4 and D5
     encoder_1: encoder_1 {
         compatible = "alps,ec11";
-        a-gpios = <&xiao_d 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        b-gpios = <&xiao_d 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        a-gpios = <&xiao_d 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        b-gpios = <&xiao_d 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         steps = <80>; 
         status = "okay";
     };
@@ -68,10 +68,10 @@
     kscan0: kscan_0 {
         compatible = "zmk,kscan-gpio-direct";
         input-gpios
-            = <&xiao_d 1 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>  // B1
-            , <&xiao_d 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>  // B2
-            , <&xiao_d 3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>  // B3
-            , <&xiao_d 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Encoder Button
+            = <&xiao_d 0 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>  // B1
+            , <&xiao_d 1 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>  // B2
+            , <&xiao_d 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>  // B3
+            , <&xiao_d 5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Encoder Button
             ;
     };
 
