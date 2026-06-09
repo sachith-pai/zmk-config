@@ -1,53 +1,7 @@
 #include <dt-bindings/zmk/matrix_transform.h>
 #include <dt-bindings/pinctrl/nrf-pinctrl.h>
 
-// 1. Move I2C to D9 (SDA) and D8 (SCL)
-&pinctrl {
-    i2c0_custom: i2c0_custom {
-        group1 {
-            psels = <NRF_PSEL(TWIM_SDA, 1, 14)>,
-                    <NRF_PSEL(TWIM_SCL, 1, 13)>;
-            bias-pull-up;        
-        };
-    };
-    i2c0_custom_sleep: i2c0_custom_sleep {
-        group1 {
-            psels = <NRF_PSEL(TWIM_SDA, 1, 14)>,
-                    <NRF_PSEL(TWIM_SCL, 1, 13)>;
-            low-power-enable;
-            bias-pull-up;
-        };
-    };
-};
 
-// 2. Setup the OLED Display
-&i2c0 {
-    status = "okay";
-    pinctrl-0 = <&i2c0_custom>;
-    pinctrl-1 = <&i2c0_custom_sleep>;
-    pinctrl-names = "default", "sleep";
-
-    oled: ssd1306@3c {
-        compatible = "solomon,ssd1306fb";
-        reg = <0x3c>;
-        width = <128>;
-        height = <64>;
-        segment-offset = <0>;
-        page-offset = <0>;
-        display-offset = <0>;
-        multiplex-ratio = <63>;
-        segment-remap;
-        com-invdir;
-        prechargep = <0x22>;
-    };
-};
-
-/ {
-    chosen {
-        zmk,kscan = &kscan0;
-        zmk,matrix-transform = &default_transform;
-        zephyr,display = &oled;
-    };
 
     // 3. Define the Rotary Encoder on D4 and D5
     encoder_1: encoder_1 {
