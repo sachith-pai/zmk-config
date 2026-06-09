@@ -23,7 +23,7 @@
 // 2. Setup the OLED Display
 &i2c0 {
     status = "okay";
-   
+    clock-frequency = <100000>;
     pinctrl-0 = <&i2c0_custom>;
     pinctrl-1 = <&i2c0_custom_sleep>;
     pinctrl-names = "default", "sleep";
