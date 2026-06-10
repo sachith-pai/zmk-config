@@ -3,8 +3,6 @@ if SHIELD_MACRO
 config ZMK_KEYBOARD_NAME
     default "macro"
 
-endif # SHIELD_MACRO
-
 if ZMK_DISPLAY
 
 config I2C
@@ -32,4 +30,4 @@ endchoice
 
 endif # LVGL
 
-endif
+endif # SHIELD_MACRO
