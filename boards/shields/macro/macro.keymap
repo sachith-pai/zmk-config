@@ -1,43 +1,36 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>      // ADDED: Bluetooth profile controls
+#include <dt-bindings/zmk/outputs.h> // ADDED: Physical connection toggle
 
 / {
     behaviors {
-        // Defines the custom logic for the encoder button
         encoder_btn: hold_tap_encoder {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
             flavor = "hold-preferred";
-            tapping-term-ms = <250>; // Hold for 250ms to trigger the layer switch
+            tapping-term-ms = <250>; 
             bindings = <&tog>, <&kp>;
         };
     };
 
     keymap {
         compatible = "zmk,keymap";
-
+        
         volume_layer {
-            // This name automatically shows on the OLED screen!
             display-name = "VOLUME"; 
-            
-            // Hold knob for Brightness mode. Tap knob for Mute.
             bindings = <
                 &kp C_PREV  &kp C_MUTE  &kp C_NEXT  &encoder_btn 1 C_PP
             >;
-
-            // Twisting the knob changes volume
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
         };
 
         brightness_layer {
             display-name = "BRIGHT";
-            
-            // Tapping the knob here toggles back to the Volume layer
+            // B1: Clear current BT profile | B2: Toggle USB vs BLE | B3: Force Profile 0 | Encoder SW: Toggle Layer
             bindings = <
-                &trans  &trans  &trans  &tog 1
+                &bt BT_CLR  &out OUT_TOG  &bt BT_SEL 0  &tog 1
             >;
-
-            // Twisting the knob changes Windows display brightness
             sensor-bindings = <&inc_dec_kp C_BRI_UP C_BRI_DN>;
         };
     };
