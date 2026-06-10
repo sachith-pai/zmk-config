@@ -1,6 +1,0 @@
-if SHIELD_MACROTEST
-
-config ZMK_KEYBOARD_NAME
-    default "macrotest"
-
-endif # SHIELD_MACROTEST
