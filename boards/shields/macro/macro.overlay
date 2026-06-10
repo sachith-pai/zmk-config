@@ -1,40 +1,15 @@
 #include <dt-bindings/zmk/matrix_transform.h>
-#include <dt-bindings/pinctrl/nrf-pinctrl.h>
 
-// 1. Move I2C to D9 (SDA) and D8 (SCL)
-&pinctrl {
-    i2c0_custom: i2c0_custom {
-        group1 {
-            psels = <NRF_PSEL(TWIM_SDA, 1, 14)>,
-                    <NRF_PSEL(TWIM_SCL, 1, 13)>;
-            bias-pull-up;        
-        };
-    };
-    i2c0_custom_sleep: i2c0_custom_sleep {
-        group1 {
-            psels = <NRF_PSEL(TWIM_SDA, 1, 14)>,
-                    <NRF_PSEL(TWIM_SCL, 1, 13)>;
-            low-power-enable;
-            bias-pull-up;
-        };
-    };
-};
-
-// 2. Setup the OLED Display
+// 1. Setup the OLED Display on default XIAO I2C pins (D4 = SDA, D5 = SCL)
 &i2c0 {
     status = "okay";
-    clock-frequency = <100000>;
-    pinctrl-0 = <&i2c0_custom>;
-    pinctrl-1 = <&i2c0_custom_sleep>;
-    pinctrl-names = "default", "sleep";
-
-    // CHANGED: Using the SH1106 driver instead of SSD1306
-    oled: sh1106@3c {
-        compatible = "sinowealth,sh1106";
+    
+    oled: ssd1306@3c {
+        compatible = "solomon,ssd1306fb";
         reg = <0x3c>;
         width = <128>;
         height = <64>;
-        segment-offset = <2>; // Crucial for SH1106 displays
+        segment-offset = <0>;
         page-offset = <0>;
         display-offset = <0>;
         multiplex-ratio = <63>;
@@ -51,11 +26,12 @@
         zephyr,display = &oled;
     };
 
-    // 3. Define the Rotary Encoder on D4 and D5
+    // 2. Define the Rotary Encoder
+    // MOVED to D3 and D7 to prevent crashing the I2C display!
     encoder_1: encoder_1 {
         compatible = "alps,ec11";
         a-gpios = <&xiao_d 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        b-gpios = <&xiao_d 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        b-gpios = <&xiao_d 7 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; // Moved to D7
         steps = <80>; 
         status = "okay";
     };
@@ -66,18 +42,19 @@
         triggers-per-rotation = <20>; 
     };
 
-    // 4. Define Direct GPIO for your 4 buttons
+    // 3. Define Direct GPIO for your 4 buttons
     kscan0: kscan_0 {
         compatible = "zmk,kscan-gpio-direct";
+        wakeup-source;
         input-gpios
             = <&xiao_d 0 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>  // B1
             , <&xiao_d 1 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>  // B2
             , <&xiao_d 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>  // B3
-            , <&xiao_d 5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> // Encoder Button
+            , <&xiao_d 8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>  // Encoder Button (Moved to D8)
             ;
     };
 
-    // 5. Map the 4 keys in a single straight line
+    // 4. Map the 4 keys in a single straight line
     default_transform: matrix_transform_0 {
         compatible = "zmk,matrix-transform";
         columns = <4>;
