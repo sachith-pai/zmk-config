@@ -1,5 +1,23 @@
 #include <dt-bindings/zmk/matrix_transform.h>
 
+
+&pinctrl {
+    i2c0_custom: i2c0_custom {
+        group1 {
+            psels = <NRF_PSEL(TWIM_SDA, 1, 14)>,
+                    <NRF_PSEL(TWIM_SCL, 1, 13)>;
+            bias-pull-up;        
+        };
+    };
+    i2c0_custom_sleep: i2c0_custom_sleep {
+        group1 {
+            psels = <NRF_PSEL(TWIM_SDA, 1, 14)>,
+                    <NRF_PSEL(TWIM_SCL, 1, 13)>;
+            low-power-enable;
+            bias-pull-up;
+        };
+    };
+};
 // 1. Setup the OLED Display on default XIAO I2C pins (D4 = SDA, D5 = SCL)
 &i2c0 {
     status = "okay";
@@ -31,7 +49,7 @@
     encoder_1: encoder_1 {
         compatible = "alps,ec11";
         a-gpios = <&xiao_d 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        b-gpios = <&xiao_d 7 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; // Moved to D7
+        b-gpios = <&xiao_d 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; // Moved to D7
         steps = <80>; 
         status = "okay";
     };
@@ -50,7 +68,7 @@
             = <&xiao_d 0 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>  // B1
             , <&xiao_d 1 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>  // B2
             , <&xiao_d 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>  // B3
-            , <&xiao_d 8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>  // Encoder Button (Moved to D8)
+            , <&xiao_d 5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>  // Encoder Button (Moved to D8)
             ;
     };
 
