@@ -1,9 +1,9 @@
 #include <dt-bindings/zmk/matrix_transform.h>
+#include "macro-layouts.dtsi"
 
 // 1. Setup the OLED Display on default XIAO I2C pins (D4 = SDA, D5 = SCL)
 &i2c0 {
     status = "okay";
-    
     oled: ssd1306@3c {
         compatible = "solomon,ssd1306fb";
         reg = <0x3c>;
@@ -22,7 +22,7 @@
 / {
     chosen {
         zmk,kscan = &kscan0;
-        zmk,matrix-transform = &default_transform;
+        zmk,physical-layout = &default_layout;
         zephyr,display = &oled;
     };
 
@@ -32,7 +32,7 @@
         compatible = "alps,ec11";
         a-gpios = <&xiao_d 8 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         b-gpios = <&xiao_d 7 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; // Moved to D7
-        steps = <80>; 
+        steps = <80>;
         status = "okay";
     };
 

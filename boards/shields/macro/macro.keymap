@@ -13,12 +13,10 @@
             bindings = <&tog>, <&kp>;
         };
     };
-
     keymap {
         compatible = "zmk,keymap";
-        
         volume_layer {
-            display-name = "VOLUME"; 
+            display-name = "VOLUME";
             bindings = <
                 &kp C_PREV  &kp C_MUTE  &kp C_NEXT  &encoder_btn 1 C_PP
             >;
@@ -27,9 +25,8 @@
 
         brightness_layer {
             display-name = "BRIGHT";
-            // B1: Clear current BT profile | B2: Toggle USB vs BLE | B3: Force Profile 0 | Encoder SW: Toggle Layer
             bindings = <
-                &bt BT_CLR  &out OUT_TOG  &bt BT_SEL 0  &tog 1
+                &bt BT_CLR  &out OUT_TOG  &studio_unlock  &tog 1
             >;
             sensor-bindings = <&inc_dec_kp C_BRI_UP C_BRI_DN>;
         };
