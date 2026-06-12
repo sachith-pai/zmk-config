@@ -1,37 +1,33 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
-#include <dt-bindings/zmk/bt.h>      // ADDED: Bluetooth profile controls
-#include <dt-bindings/zmk/outputs.h> // ADDED: Physical connection toggle
 
 / {
-    behaviors {
-        encoder_btn: hold_tap_encoder {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            flavor = "hold-preferred";
-            tapping-term-ms = <250>; 
-            bindings = <&tog>, <&kp>;
+    macros {
+        /* 
+         * Define your custom macros here. 
+         * Because ZMK Studio is active, it will auto-detect these 
+         * behaviors and list them under the "Macros" or "User Behaviors" tab.
+         */
+        zmk_studio_macro: zmk_studio_macro {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_tap &kp Z &kp M &kp K &kp SPACE &kp S &kp T &kp U &kp D &kp I &kp O>;
         };
     };
 
     keymap {
         compatible = "zmk,keymap";
-        
-        volume_layer {
-            display-name = "VOLUME"; 
-            bindings = <
-                &kp C_PREV  &kp C_MUTE  &kp C_NEXT  &encoder_btn 1 C_PP
-            >;
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
-        };
 
-        brightness_layer {
-            display-name = "BRIGHT";
-            // B1: Clear current BT profile | B2: Toggle USB vs BLE | B3: Force Profile 0 | Encoder SW: Toggle Layer
+        default_layer {
+            /*
+             * Replace these placeholders with your actual matrix layout positions.
+             * This configuration includes the unlock key and your macro.
+             */
             bindings = <
-                &bt BT_CLR  &out OUT_TOG  &bt BT_SEL 0  &tog 1
+                &kp ESC          &kp Q             &kp W             &kp E
+                &kp LSHIFT       &kp A             &kp S             &zmk_studio_macro
+                &kp LCTRL        &kp Z             &kp X             &studio_unlock
             >;
-            sensor-bindings = <&inc_dec_kp C_BRI_UP C_BRI_DN>;
         };
     };
 };
