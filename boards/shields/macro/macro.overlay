@@ -52,8 +52,8 @@
     // MOVED to D3 and D7 to prevent crashing the I2C display!
     encoder_1: encoder_1 {
         compatible = "alps,ec11";
-        a-gpios = <&xiao_d 8 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        b-gpios = <&xiao_d 7 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; // Moved to D7
+        a-gpios = <&xiao_d 7 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        b-gpios = <&xiao_d 8 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; // Moved to D7
         steps = <80>;
         status = "okay";
     };
