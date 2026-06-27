@@ -15,6 +15,7 @@
     };
     keymap {
         compatible = "zmk,keymap";
+        
         volume_layer {
             display-name = "VOLUME";
             bindings = <
@@ -30,16 +31,15 @@
             >;
             sensor-bindings = <&inc_dec_kp C_BRI_UP C_BRI_DN>;
         };
+
+        // NEW LAYER: Layer 2
         extra_layer {
             display-name = "EXTRA";
             bindings = <
-                &kp F1      &kp F2      &kp F3           &tog 3
+                &kp F1      &kp F2      &kp F3           &tog 0
             >;
             sensor-bindings = <&inc_dec_kp UP DOWN>;
-        };        
- 
-
-
+        };
         
     };
 };
