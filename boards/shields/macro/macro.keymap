@@ -36,7 +36,7 @@
         extra_layer {
             display-name = "EXTRA";
             bindings = <
-                &kp F1      &kp F2      &kp F3           &tog 0
+                &kp F1      &kp F2      &kp F3           &tog DEFAULT
             >;
             sensor-bindings = <&inc_dec_kp UP DOWN>;
         };
