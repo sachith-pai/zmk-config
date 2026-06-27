@@ -20,7 +20,7 @@
             bindings = <
                 &kp C_PREV  &kp C_MUTE  &kp C_NEXT  &encoder_btn 1 C_PP
             >;
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
+            sensor-bindings = <&inc_dec_kp LC(LS(F12)) LC(LS(F11))>;
         };
 
         extra_layer {
