@@ -28,7 +28,7 @@
             bindings = <
                 &kp F1      &kp F2      &studio_unlock  &encoder_btn 2 C_MUTE
             >;
-            sensor-bindings = <&inc_dec_kp C_BRI_UP C_BRI_DN>;
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
         };        
 
         misc_layer {
