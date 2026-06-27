@@ -7,7 +7,7 @@
     behaviors {
         encoder_btn: hold_tap_encoder {
             compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <3>;
+            #binding-cells = <2>;
             flavor = "hold-preferred";
             tapping-term-ms = <250>; 
             bindings = <&tog>, <&kp>;
@@ -15,31 +15,32 @@
     };
     keymap {
         compatible = "zmk,keymap";
-        
         volume_layer {
-            display-name = "VOLUME";
+            display-name = "YT Music";
             bindings = <
                 &kp C_PREV  &kp C_MUTE  &kp C_NEXT  &encoder_btn 1 C_PP
             >;
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
         };
 
+        extra_layer {
+            display-name = "Extra";
+            bindings = <
+                &kp F1      &kp F2      &kp F3           &tog 2
+            >;
+            sensor-bindings = <&inc_dec_kp UP DOWN>;
+        };        
+
         brightness_layer {
             display-name = "BRIGHT";
             bindings = <
-                &bt BT_CLR  &kp C_MUTE  &studio_unlock   &tog 2
+                &bt BT_CLR  &kp C_MUTE  &studio_unlock   &to 0
             >;
             sensor-bindings = <&inc_dec_kp C_BRI_UP C_BRI_DN>;
         };
 
-        // NEW LAYER: Layer 2
-        extra_layer {
-            display-name = "EXTRA";
-            bindings = <
-                &kp F1      &kp F2      &kp F3           &tog 0
-            >;
-            sensor-bindings = <&inc_dec_kp UP DOWN>;
-        };
+
+
         
     };
 };
