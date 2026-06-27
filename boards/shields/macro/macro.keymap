@@ -7,7 +7,7 @@
     behaviors {
         encoder_btn: hold_tap_encoder {
             compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
+            #binding-cells = <3>;
             flavor = "hold-preferred";
             tapping-term-ms = <250>; 
             bindings = <&tog>, <&kp>;
@@ -36,7 +36,7 @@
         extra_layer {
             display-name = "EXTRA";
             bindings = <
-                &kp F1      &kp F2      &kp F3           &to 0
+                &kp F1      &kp F2      &kp F3           &mo 0
             >;
             sensor-bindings = <&inc_dec_kp UP DOWN>;
         };
