@@ -30,15 +30,7 @@
             >;
             sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
         }; 
-
-                extra1 {
-            status = "reserved";
-        };
-
-        extra2 {
-            status = "reserved";
-        };       
-
+                       
         misc_layer {
             display-name = "Misc";
             bindings = <
@@ -46,6 +38,14 @@
             >;
         
         };
+        
+        extra1 {
+            status = "reserved";
+        };
+
+        extra2 {
+            status = "reserved";
+        };        
 
 
 
